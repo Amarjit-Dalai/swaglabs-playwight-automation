@@ -1,5 +1,26 @@
-/node_modules
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Ignorar archivos generados por TypeScript
+/dist
+/.parcel-cache
+/.nyc_output
+
+# Ignorar dependencias
+/node_modules
+
+# Ignorar archivos específicos del entorno de desarrollo
+/.vscode
+/.idea
+*.log
+*.log.*
+*.sqlite
+*.swp
+*.swo
+
+# Ignorar archivos de configuración local
+.env
+.env.local
+
