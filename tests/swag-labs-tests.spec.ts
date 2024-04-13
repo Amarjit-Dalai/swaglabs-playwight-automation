@@ -82,7 +82,7 @@ test('TC07: Logout Success', async ({ page }) => {
     await expect(productPage.productTitle).toContainText('Products');
     await sidebarPage.sidebarButton.click()
     await sidebarPage.logoutButton.click()
-    await expect(sidebarPage.logoutButton()).toBeVisible
+    await expect(loginPage.loginButton).toBeVisible()
 });
 
 test('TC08: Sort by Name (A to Z)', async ({ page }) => {
