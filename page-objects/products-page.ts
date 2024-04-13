@@ -10,7 +10,10 @@ export class ProductPage {
     readonly productItemByIndex: (index: any) => Locator;
     readonly firstAddToCartButton: (index: any) => any;
     readonly shoppingCartBadge: Locator;
-
+    readonly shoppingCartIcon: Locator;
+    readonly sortProductSelect: Locator;
+    readonly allProductNames: Locator;
+    readonly allProductPrices: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -22,6 +25,11 @@ export class ProductPage {
         this.productItemByIndex = (index) => this.page.locator('[data-test="inventory-list"] div').nth(index)
         this.firstAddToCartButton = (index) => this.productItemByIndex(index).getByRole('button', { name: 'Add to Cart' })
         this.shoppingCartBadge = page.locator('[data-test="shopping-cart-badge"]')
+        this.shoppingCartIcon = page.locator('[data-test="shopping-cart-link"]')
+        this.sortProductSelect = page.locator('[data-test="product-sort-container"]');
+        this.allProductNames = page.locator('[data-test="inventory-item-name"]')
+        this.allProductPrices = page.locator('//*[@data-test="inventory-item-price"]')
+
     }
 
     async getShoppingCartBadgeNumber() {
@@ -43,14 +51,62 @@ export class ProductPage {
         }
     }
 
-    async addProductsToCart(products:Array<string>){
+    async addProductsToCart(products:any){
         const emptyCart = await this.getShoppingCartBadgeNumber()
         for (const product of products) {
-            await this.addToCartButton(product).click()
-            await expect(this.removeButtonByText(product)).toBeVisible()
+            await this.addToCartButton(product.name).click()
+            await expect(this.removeButtonByText(product.name)).toBeVisible()
         }
         const cartBadgeNumber = await this.getShoppingCartBadgeNumber()
         await expect(cartBadgeNumber).toBe(emptyCart + products.length)
     }
 
+    async validateSortedProducts(value) {
+        switch (value) {
+            case 'az': {
+                let productNamesText = await this.allProductNames.allTextContents()
+                const productsTextClone = [...productNamesText].sort((a, b) => a.localeCompare(b))
+                console.log(productNamesText)
+                console.log(productsTextClone)
+                await expect(productNamesText).toEqual(productsTextClone)
+                break;
+            }
+            case 'za': {
+                let productNamesText = await this.allProductNames.allTextContents()
+                const productsTextClone = [...productNamesText].sort((a, b) => b.localeCompare(a))
+                console.log(productNamesText)
+                console.log(productsTextClone)
+                await expect(productNamesText).toEqual(productsTextClone)
+                break;
+            }
+            case 'lohi': {
+                let productPricesText = await this.allProductPrices.allTextContents()
+                const productsTextClone = [...productPricesText].sort((a, b) => {
+                    // Extract number from each string
+                    let valorA = parseFloat(a.slice(1));
+                    let valorB = parseFloat(b.slice(1));
+                    // Compare Numeric Values
+                    return valorA - valorB;
+                  });
+                console.log(productPricesText)
+                console.log(productsTextClone)
+                await expect(productPricesText).toEqual(productsTextClone)
+                break;
+            }
+            case 'hilo': {
+                let productPricesText = await this.allProductPrices.allTextContents()
+                const productsTextClone = [...productPricesText].sort((a, b) => {
+                    let valorA = parseFloat(a.slice(1));
+                    let valorB = parseFloat(b.slice(1));
+                    return valorB - valorA;
+                  });
+                console.log(productPricesText)
+                console.log(productsTextClone)
+                await expect(productPricesText).toEqual(productsTextClone)
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
