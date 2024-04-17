@@ -1,9 +1,3 @@
----
-runme:
-  id: 01HVPTHVZE3TV90PGGQ5ZG67JH
-  version: v3
----
-
 # Swag Labs Playwright Tests
 
 ![Playwright Logo](https://playwright.dev/img/playwright-logo.svg)
