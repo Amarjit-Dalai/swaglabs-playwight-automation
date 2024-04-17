@@ -11,6 +11,7 @@ let productPage: ProductPage
 let cartPage: CartPage
 let sidebarPage: SidebarPage
 
+test.describe('Swag Labs Tests',async () => {
 test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page)
     productPage = new ProductPage(page)
@@ -19,7 +20,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto('/')
 });
 
-test('TC01: Login Success for Standard User', async ({ page }) => {
+test('TC01: Login Success for Standard User',{ tag: ['@login', '@regression'] }, async ({ page }) => {
     await loginPage.login('standard_user', 'secret_sauce')
     await expect(productPage.productTitle).toContainText('Products');
 });
@@ -117,5 +118,5 @@ test('TC11: Sort by Price (high to low)', async ({ page }) => {
     await productPage.validateSortedProducts('hilo')
 });
 
-
+})
 
