@@ -35,13 +35,13 @@ export class CartPage {
 
     }
 
-    async validateProductItemsAreDisplayed(products) {
+    async validateProductItemsAreDisplayed(products: { name: string; description: string; price: string; }[]) {
         for (const product of products) {
             await expect(this.cartItemByText(product.name)).toBeVisible
         }
     }
 
-    async fillCheckoutInformation(firstName, lastName, postalCode) {
+    async fillCheckoutInformation(firstName: string, lastName: string, postalCode: string) {
         await this.firstNameInput.fill(firstName)
         await this.lastNameInput.fill(lastName)
         await this.postalCodeInput.fill(postalCode)
