@@ -38,7 +38,7 @@ test('TC03: Add Product to Cart', async ({ page }) => {
     await productPage.addToCartButton(productName).click()
     await expect(productPage.removeButtonByText(productName)).toBeVisible()
     const cartBadgeNumber = await productPage.getShoppingCartBadgeNumber()
-    await expect(cartBadgeNumber).toBe(emptyCart + 1)
+    expect(cartBadgeNumber).toBe(emptyCart + 1)
 });
 
 test('TC04: Add Multiple products to Cart', async ({ page }) => {
