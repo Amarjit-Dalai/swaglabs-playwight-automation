@@ -50,7 +50,7 @@ test.describe('New Todo', () => {
     await checkNumberOfTodosInLocalStorage(page, 1);
   });
 
-  test('should append new items to the bottom of the list', async ({ page }) => {
+  test('should append new items are the bottom of the list', async ({ page }) => {
     // Create 3 items.
     await createDefaultTodos(page);
 
